@@ -1,6 +1,7 @@
 import { IconButton, TextField } from "@mui/material";
+import axios from "axios";
 import { Box, Container } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Note from "../Components/Note";
@@ -14,7 +15,28 @@ const NoteScreen = () => {
   const AddItem = () => {
     setItems((prev) => [...prev, item]);
     console.log(items);
+    const sendItem = {
+      title: item.title,
+      text: item.text,
+    };
+    axios({
+      method: "POST",
+      url: "http://localhost:8000/",
+      contentType: "application/json",
+      data: { sendItem },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
+  useEffect(() => {
+    axios.get("http://localhost:8000/").then((response) => {
+      setItems(response.data);
+    });
+  }, []);
   return (
     <Container fixed>
       <Box
@@ -122,7 +144,7 @@ const NoteScreen = () => {
             return (
               <Note
                 setItems={setItems}
-                key={el.i + Math.floor(Math.random() * 1000 + 1)}
+                key={el._id}
                 title={el.title}
                 text={el.text}
                 marginLeft={i % 3 === 0 ? "0px" : "25px"}
