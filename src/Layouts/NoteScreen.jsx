@@ -13,8 +13,6 @@ const NoteScreen = () => {
   });
   const [items, setItems] = useState([]);
   const AddItem = () => {
-    setItems((prev) => [...prev, item]);
-    console.log(items);
     const sendItem = {
       title: item.title,
       text: item.text,
@@ -36,7 +34,7 @@ const NoteScreen = () => {
     axios.get("http://localhost:8000/").then((response) => {
       setItems(response.data);
     });
-  }, []);
+  }, [items]);
   return (
     <Container fixed>
       <Box
@@ -145,6 +143,7 @@ const NoteScreen = () => {
               <Note
                 setItems={setItems}
                 key={el._id}
+                _id={el._id}
                 title={el.title}
                 text={el.text}
                 marginLeft={i % 3 === 0 ? "0px" : "25px"}

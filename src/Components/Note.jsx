@@ -2,11 +2,30 @@ import { IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
 const Note = (props) => {
   const multiline = true;
   let marginLeft = props.marginLeft;
   const DeleteItem = () => {
+    /*
     props.setItems((els) => [...els.filter((el) => el.title !== props.title)]);
+  */
+    console.log(props._id);
+    const deleteItem = {
+      _id: props._id,
+    };
+    axios({
+      method: "POST",
+      url: "http://localhost:8000/delete",
+      contentType: "application/json",
+      data: { deleteItem },
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   return (
     <Box
