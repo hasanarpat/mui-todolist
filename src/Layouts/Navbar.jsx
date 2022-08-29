@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { NoteAdd } from "@mui/icons-material";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const Navbar = () => {
+const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -33,7 +33,13 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
   return (
-    <AppBar position="static" sx={{ background: "orange" }}>
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: props.theme,
+        color: props.text,
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <NoteAdd sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -84,7 +90,9 @@ const Navbar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" sx={{ color: props.text }}>
+                    {page}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
